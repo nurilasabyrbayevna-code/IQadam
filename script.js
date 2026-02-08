@@ -8,11 +8,14 @@ let selected = null;
 let currentPlayer = "white"; 
 const cells = [];
 
-// Шылау сұрақтары
+// 24 шашкаға арналған шылау сұрақтары
 const questions = [
   {q: "Қай шылау дұрыс?", options:["да","де"], a: "да"},
   {q: "Қай шылау дұрыс?", options:["-ғы","-гі"], a: "-гі"},
   {q: "Қай шылау дұрыс?", options:["менің","меніңнің"], a: "менің"},
+  {q: "Қай шылау дұрыс?", options:["сол","солы"], a: "сол"},
+  {q: "Қай шылау дұрыс?", options:["бен","пен"], a: "пен"},
+  {q: "Қай шылау дұрыс?", options:["және","мен"], a: "және"}
 ];
 
 // Модаль сұрақ көрсету функциясы
@@ -27,10 +30,8 @@ function askQuestion(callback){
         btn.onclick = ()=>{
             questionModal.classList.add("hidden");
             if(opt===q.a){
-                alert("Дұрыс жауап! Жүріс жасауға болады.");
                 callback(true);
             } else {
-                alert("Қате жауап! Келесі ойыншыға ауысу.");
                 callback(false);
             }
         };
@@ -66,6 +67,7 @@ board.addEventListener("click",(e)=>{
     } else if(selected && cell.classList.contains("black") && cell.textContent===""){
         askQuestion((correct)=>{
             if(!correct){
+                alert("Қате жауап! Келесі ойыншыға ауысу.");
                 selected.style.border="";
                 selected=null;
                 currentPlayer = currentPlayer==="white" ? "black" : "white";
@@ -73,6 +75,7 @@ board.addEventListener("click",(e)=>{
                 return;
             }
 
+            // Жүріс жасау
             const fromIndex = cells.indexOf(selected);
             const toIndex = cells.indexOf(cell);
             const jumpIndex = Math.floor((fromIndex+toIndex)/2);
