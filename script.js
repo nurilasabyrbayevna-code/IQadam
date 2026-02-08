@@ -1,8 +1,17 @@
 const board = document.getElementById("board");
+const currentPlayerSpan = document.getElementById("currentPlayer");
 let selected = null;
+let currentPlayer = "white"; 
 const cells = [];
 
-// 8x8 шашка тақтасы
+// Шылау тақырыбы сұрақтары
+const questions = [
+  {q: "Қай шылау дұрыс: да немесе де?", a: "да"},
+  {q: "Қай шылау дұрыс: -ғы немесе -гі?", a: "-гі"},
+  {q: "Қай шылау дұрыс: менің немесе меніңнің?", a: "менің"},
+];
+
+// 8x8 шашка тақтасы, 12+12 шашка
 for(let i=0;i<64;i++){
     const cell = document.createElement("div");
     cell.classList.add("cell");
@@ -11,6 +20,7 @@ for(let i=0;i<64;i++){
     if((row+col)%2===0) cell.classList.add("white");
     else cell.classList.add("black");
 
+    // Шашкаларды орналастыру
     if(row<3 && (row+col)%2!==0){ cell.classList.add("piece"); cell.dataset.color="black"; cell.textContent="●"; }
     if(row>4 && (row+col)%2!==0){ cell.classList.add("piece"); cell.dataset.color="white"; cell.textContent="○"; }
 
@@ -18,16 +28,32 @@ for(let i=0;i<64;i++){
     cells.push(cell);
 }
 
-// Шашка таңдау және жылжыту
+function askQuestion(){
+    const index = Math.floor(Math.random()*questions.length);
+    const ans = prompt(questions[index].q);
+    return ans === questions[index].a;
+}
+
+// Жүріс жасау
 board.addEventListener("click",(e)=>{
     const cell = e.target;
     if(!cell.classList.contains("cell")) return;
 
-    if(cell.classList.contains("piece")){
+    // Шашка таңдау
+    if(cell.classList.contains("piece") && cell.dataset.color === currentPlayer){
         if(selected) selected.style.border="";
         selected = cell;
         cell.style.border="2px solid red";
     } else if(selected && cell.classList.contains("black") && cell.textContent===""){
+        if(!askQuestion()){
+            alert("Қате жауап! Келесі ойыншыға ауысу.");
+            selected.style.border="";
+            selected = null;
+            currentPlayer = currentPlayer === "white" ? "black" : "white";
+            currentPlayerSpan.textContent = currentPlayer;
+            return;
+        }
+
         const fromIndex = cells.indexOf(selected);
         const toIndex = cells.indexOf(cell);
         const jumpIndex = Math.floor((fromIndex+toIndex)/2);
@@ -48,5 +74,8 @@ board.addEventListener("click",(e)=>{
         delete selected.dataset.color;
         selected.style.border="";
         selected=null;
+
+        currentPlayer = currentPlayer === "white" ? "black" : "white";
+        currentPlayerSpan.textContent = currentPlayer;
     }
 });
