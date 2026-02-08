@@ -29,4 +29,4 @@ p { font-size: 18px; color: #555; }
 .cell.black { background-color: #769656; }
 .cell.white { background-color: #eeeed2; }
 
-.cell.piece { cursor: pointer; font-size: 24px; line-height: 50px; }
+.cell.piece { cursor: pointer; font-size: 24px; line-height: 50px; text-align:center; }
