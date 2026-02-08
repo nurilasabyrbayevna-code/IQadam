@@ -2,14 +2,40 @@
 <html lang="kk">
 <head>
 <meta charset="UTF-8">
-<title>Интеллектуалды шашка</title>
+<title>♟ Интеллектуалды шашка</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>♟ Интеллектуалды шашка</h1>
-<p>Бұл – педагогикалық веб-ойын.</p>
 
-<div id="board"></div>
+<header>
+  <h1>♟ Интеллектуалды шашка</h1>
+  <p>7-сыныпқа арналған педагогикалық веб-ойын</p>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#rules">Ойын ережесі</a></li>
+    <li><a href="#game">Ойын бөлімі</a></li>
+  </ul>
+</nav>
+
+<section id="rules">
+  <h2>Ойын ережесі</h2>
+  <ul>
+    <li>Шашкаларды қара ұяшыққа жылжыту</li>
+    <li>Қарсы шашканы алып тастау (multi-jump мүмкіндігі бар)</li>
+    <li>10 ұпай → дамка (король шашка)</li>
+  </ul>
+</section>
+
+<section id="game">
+  <h2>Ойын бөлімі</h2>
+  <div id="board"></div>
+</section>
+
+<footer>
+  <p>Автор: Нұрила Сабырбайқызы – IQadam жобасының авторы</p>
+</footer>
 
 <script src="script.js" defer></script>
 </body>
